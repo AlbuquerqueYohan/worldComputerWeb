@@ -14,6 +14,8 @@ class ComputerController extends AbstractController
     #[Route('/computer', name: 'computer_index')]
     public function index(): Response
     {
-        return new Response('Hello World');
+        return $this->render('computer/index.html.twig', [
+            'current_menu' => 'computer'
+            ]);
     }
 }
