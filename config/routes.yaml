@@ -2,6 +2,10 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-home:
-  path: /
-  controller: App\Controller\HomeController::index
+#home:
+#  path: /
+#  controller: App\Controller\HomeController::index
+
+#computer_index:
+#  path: /computer
+#  controller: App\Controller\ComputerController::index
