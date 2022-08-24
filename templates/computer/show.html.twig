@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{%  block titlle ordinateur.nom %}
+
+{%  block body %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                </div>
+                <div class="col-mb-4">
+                    <h1>{{ ordinateur.nom }}</h1>
+                    <a href="#" class="btn btn-primary">Contacter l'administrateur</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="cold-md-8">
+                <h2>Caractéristique de l'ordinateur</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>Processeur :</td>
+                        <td>{{ ordinateur.processeur}}</td>
+                    </tr>
+                    <tr>
+                        <td>Carte graphique :</td>
+                        <td>{{ ordinateur.carteGraphique }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ram :</td>
+                        <td>{{ ordinateur.ram }}Go</td>
+                    </tr>
+                    <tr>
+                        <td>Stockage :</td>
+                        <td>{{ ordinateur.stockage }}</td>
+                    </tr>
+                    <tr>
+                        <td>Poids :</td>
+                        <td>{{ ordinateur.poids}}</td>
+                    </tr>
+                    <tr>
+                        <td>Dimesions (en pouces) :</td>
+                        <td>{{ ordinateur.dimensionsEcran }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Autres information</h2>
+                <table class="table table-striped">
+                        <tr>
+                            <td>Type </td>
+                            <td>{{ ordinateur.typeText }}</td>
+                        </tr>
+                        <tr>
+                            <td>Info </td>
+                            <td>{{ ordinateur.caracteristique }}</td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+    </div>
+{%  endblock %}
+
