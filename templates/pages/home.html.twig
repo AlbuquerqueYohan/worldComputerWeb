@@ -7,4 +7,23 @@
         <h1>WORLD OF COMPUTER</h1>
         <p> Bienvenue dans l'univers de l'ordinateur, vous trouverez ici les meilleurs ordinateurs</p>
     </div>
+
+    <div class="container">
+    <h2>Dernier ordinateurs ajoutées</h2>
+        <div class="row flex">
+            {% for ordinateurs in computer %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="#">{{ ordinateurs.nom }}</a>
+                            </h5>
+                            <p class="card-text">{{ ordinateurs.processeur }} {{ ordinateurs.ram}} {{ ordinateurs.carteGraphique}}</p>
+                            <div class="text-primary">{{ ordinateurs.type }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
