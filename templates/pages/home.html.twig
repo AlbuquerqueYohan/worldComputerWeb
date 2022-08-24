@@ -16,7 +16,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{{ path('computer.show', {id: ordinateurs.id, slug: ordinateurs.slug}) }}">{{ ordinateurs.nom }}</a>
+                                <a href="{{ path('computer_show', {id: ordinateurs.id, slug: ordinateurs.slug}) }}">{{ ordinateurs.nom }}</a>
                             </h5>
                             <p class="card-text">{{ ordinateurs.processeur }} {{ ordinateurs.ram}}Go {{ ordinateurs.carteGraphique}}</p>
                             <div class="text-primary">{{ ordinateurs.type }}</div>

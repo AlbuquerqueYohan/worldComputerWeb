@@ -44,6 +44,12 @@ class Ordinateurs
     #[ORM\Column(type: 'text')]
     private $type;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $stockage;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $caracteristique;
+
     public function __construct()
     {
         $this->ajoute_le = new \DateTime();
@@ -67,9 +73,10 @@ class Ordinateurs
     }
 
     // Slug is use for made a good URL
-    public function getSlugNom(): string
+    public function getSlug(): string
     {
-        return new (Slugify())->slugify($this->Nom);
+        $slugify = new Slugify();
+        return $slugify->slugify($this->Nom);
     }
 
     public function getRam(): ?int
@@ -108,12 +115,12 @@ class Ordinateurs
         return $this;
     }
 
-    public function getPoids(): ?int
+    public function getPoids(): ?float
     {
         return $this->Poids;
     }
 
-    public function setPoids(?int $Poids): self
+    public function setPoids(?float $Poids): self
     {
         $this->Poids = $Poids;
 
@@ -152,6 +159,30 @@ class Ordinateurs
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getStockage(): ?string
+    {
+        return $this->stockage;
+    }
+
+    public function setStockage(?string $stockage): self
+    {
+        $this->stockage = $stockage;
+
+        return $this;
+    }
+
+    public function getCaracteristique(): ?string
+    {
+        return $this->caracteristique;
+    }
+
+    public function setCaracteristique(?string $caracteristique): self
+    {
+        $this->caracteristique = $caracteristique;
 
         return $this;
     }
