@@ -32,7 +32,7 @@ class Ordinateurs
     #[ORM\Column(type: 'text', nullable: true)]
     private $carte_graphique;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'float', nullable: true)]
     private $Poids;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -161,6 +161,11 @@ class Ordinateurs
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getTypeText():string
+    {
+        return self::TYPE[$this->type];
     }
 
     public function getStockage(): ?string
