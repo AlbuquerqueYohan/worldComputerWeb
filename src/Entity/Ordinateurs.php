@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrdinateursRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 #[ORM\Entity(repositoryClass: OrdinateursRepository::class)]
 class Ordinateurs
@@ -63,6 +64,12 @@ class Ordinateurs
         $this->Nom = $Nom;
 
         return $this;
+    }
+
+    // Slug is use for made a good URL
+    public function getSlugNom(): string
+    {
+        return new (Slugify())->slugify($this->Nom);
     }
 
     public function getRam(): ?int
