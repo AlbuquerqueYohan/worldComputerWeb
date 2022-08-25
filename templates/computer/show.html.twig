@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{%  block titlle ordinateur.nom %}
+{% block titlle ordinateur.nom %}
 
-{%  block body %}
+{% block body %}
 
     <div class="jumbotron">
         <div class="container">
@@ -25,7 +25,7 @@
                 <table class="table table-striped">
                     <tr>
                         <td>Processeur :</td>
-                        <td>{{ ordinateur.processeur}}</td>
+                        <td>{{ ordinateur.processeur }}</td>
                     </tr>
                     <tr>
                         <td>Carte graphique :</td>
@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <td>Poids :</td>
-                        <td>{{ ordinateur.poids}}</td>
+                        <td>{{ ordinateur.poids }}</td>
                     </tr>
                     <tr>
                         <td>Dimesions (en pouces) :</td>
@@ -63,5 +63,5 @@
             </div>
         </div>
     </div>
-{%  endblock %}
+{% endblock %}
 

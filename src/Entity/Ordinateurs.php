@@ -166,7 +166,7 @@ class Ordinateurs
         return $this;
     }
 
-    public function getTypeText():string
+    public function getTypeText(): string
     {
         return self::TYPE[$this->type];
     }
