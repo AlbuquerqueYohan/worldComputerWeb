@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{%  block titlle ordinateur.nom %}
+{% block titlle ordinateur.nom %}
 
-{%  block body %}
+{% block body %}
 
     <div class="jumbotron">
         <div class="container">
@@ -20,12 +20,12 @@
 
     <div class="container mt-4">
         <div class="row">
-            <div class="cold-md-8">
+            <div class="col-12">
                 <h2>Caractéristique de l'ordinateur</h2>
                 <table class="table table-striped">
                     <tr>
                         <td>Processeur :</td>
-                        <td>{{ ordinateur.processeur}}</td>
+                        <td>{{ ordinateur.processeur }}</td>
                     </tr>
                     <tr>
                         <td>Carte graphique :</td>
@@ -41,29 +41,27 @@
                     </tr>
                     <tr>
                         <td>Poids :</td>
-                        <td>{{ ordinateur.poids}}</td>
+                        <td>{{ ordinateur.poids }}</td>
                     </tr>
                     <tr>
                         <td>Dimesions (en pouces) :</td>
                         <td>{{ ordinateur.dimensionsEcran }}</td>
                     </tr>
+                    <tr>
+                        <td>Port USB :</td>
+                        <td>{{ ordinateur.portUsb }}</td>
+                    </tr>
+                    <tr>
+                        <td>Type :</td>
+                        <td>{{ ordinateur.typeText }}</td>
+                    </tr>
+                    <tr>
+                        <td>Information supplémentaire :</td>
+                        <td>{{ ordinateur.caracteristique }}</td>
+                    </tr>
                 </table>
-            </div>
-
-            <div class="col-md-4">
-                <h2>Autres information</h2>
-                <table class="table table-striped">
-                        <tr>
-                            <td>Type </td>
-                            <td>{{ ordinateur.typeText }}</td>
-                        </tr>
-                        <tr>
-                            <td>Info </td>
-                            <td>{{ ordinateur.caracteristique }}</td>
-                        </tr>
-                    </table>
             </div>
         </div>
     </div>
-{%  endblock %}
+{% endblock %}
 

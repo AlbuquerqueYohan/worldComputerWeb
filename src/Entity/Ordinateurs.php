@@ -50,6 +50,9 @@ class Ordinateurs
     #[ORM\Column(type: 'text', nullable: true)]
     private $caracteristique;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $port_usb;
+
     public function __construct()
     {
         $this->ajoute_le = new \DateTime();
@@ -163,7 +166,7 @@ class Ordinateurs
         return $this;
     }
 
-    public function getTypeText():string
+    public function getTypeText(): string
     {
         return self::TYPE[$this->type];
     }
@@ -188,6 +191,18 @@ class Ordinateurs
     public function setCaracteristique(?string $caracteristique): self
     {
         $this->caracteristique = $caracteristique;
+
+        return $this;
+    }
+
+    public function getPortUsb(): ?string
+    {
+        return $this->port_usb;
+    }
+
+    public function setPortUsb(?string $port_usb): self
+    {
+        $this->port_usb = $port_usb;
 
         return $this;
     }
