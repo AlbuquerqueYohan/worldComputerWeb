@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Ordinateurs;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +19,9 @@ class OrdinateurType extends AbstractType
             ->add('carte_graphique')
             ->add('Poids')
             ->add('dimensions_ecran')
-            ->add('type')
+            ->add('type', ChoiceType::class,[
+                'choices' => $this->getChoices()
+            ])
             ->add('stockage')
             ->add('caracteristique')
             ->add('port_usb')
@@ -30,5 +33,15 @@ class OrdinateurType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Ordinateurs::class,
         ]);
+    }
+
+    private function getChoices()
+    {
+        $choices = Ordinateurs::TYPE;
+        $output = [];
+        foreach ($choices as $k => $v) {
+            $output[$v]=$k;
+        }
+        return $output;
     }
 }
