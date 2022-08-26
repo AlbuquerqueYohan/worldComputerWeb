@@ -6,6 +6,7 @@ use App\Entity\Ordinateurs;
 use App\Form\OrdinateurType;
 use App\Repository\OrdinateursRepository;
 use Doctrine\Persistence\ObjectManager;
+use http\Env\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,9 +43,10 @@ class AdminComputerController extends AbstractController
     {
         $form = $this->createForm(OrdinateurType::class, $computers);
         $form->handleRequest($request);
-        dump($form);
+
         if ($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
+            $this->addFlash('succes', 'Ordinateur modifié avec succès');
             return $this->redirectToRoute('admin_computer_index');
         }
 
@@ -52,5 +54,17 @@ class AdminComputerController extends AbstractController
             'computers' => $computers,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/admin/delete/{id}', name: 'admin_computer_delete', methods: ['DELETE', 'POST'])]
+    public function delete(Ordinateurs $computers, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete', $request->get('_token')))
+        {
+            $this->em->remove($computers);
+            $this->em->flush();
+            $this->addFlash('succes', 'Ordinateur supprimé du site web');
+        }
+        return $this->redirectToRoute('admin_computer_index');
     }
 }
