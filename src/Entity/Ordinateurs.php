@@ -25,6 +25,7 @@ class Ordinateurs
     private $Nom;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Range(min: 2, max: 64)]
     private $Ram;
 
     #[ORM\Column(type: 'text')]
@@ -34,6 +35,7 @@ class Ordinateurs
     private $carte_graphique;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Assert\Regex("/[0-9]+\.[0-9]{3}/")]
     private $Poids;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -49,6 +51,7 @@ class Ordinateurs
     private $stockage;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\Length(min: 0, max: 200)]
     private $caracteristique;
 
     #[ORM\Column(type: 'text', nullable: true)]
