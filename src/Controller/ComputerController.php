@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Ordinateurs;
+use App\Form\OrdinateurType;
 use App\Repository\OrdinateursRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +39,26 @@ class ComputerController extends AbstractController
         $computer = $this->repository->find($id);
         return $this->render('computer/show.html.twig', [
             'ordinateur' => $computer
+        ]);
+    }
+
+    #[Route('/computer/ajouter', name: 'computer_add', requirements: ['slug' => '[a-z0-9\-]*'])]
+    public function add(Request $request)
+    {
+        $computer = new Ordinateurs();
+        $form = $this->createForm(OrdinateurType::class, $computer);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $this->em->persist($computer);
+            $this->em->flush();
+            $this->addFlash('succes', 'PC ajouté avec succès');
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('admin/computer/edit.html.twig',[
+            'computer' => $computer,
+            'form' => $form->createView()
         ]);
     }
 }

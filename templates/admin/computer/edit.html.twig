@@ -3,26 +3,7 @@
 {% block body %}
     <div class="container mt-12">
         <h1>Editer l'ordinateur</h1>
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-4">{{ form_row(form.Nom) }}</div>
-            <div class="col-md-4">{{ form_row(form.Processeur) }}</div>
-            <div class="col-md-4">{{ form_row(form.carte_graphique) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">{{  form_row(form.Ram)}}</div>
-            <div class="col-md-2">{{  form_row(form.stockage)}}</div>
-            <div class="col-md-2">{{  form_row(form.Poids)}}</div>
-            <div class="col-md-2">{{  form_row(form.dimensions_ecran)}}</div>
-            <div class="col-md-2">{{  form_row(form.type)}}</div>
-            <div class="col-md-2">{{  form_row(form.port_usb)}}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-5">{{ form_row(form.caracteristique) }}</div>
-        </div>
-        {{ form_rest(form) }}
-        <button type="submit" class="btn btn-primary">Valider chanh</button>
-        {{ form_end(form) }}
+        {{ include ('admin/computer/_form.html.twig', {form: form, button: 'Editer'}) }}
     </div>
 {% endblock %}
 

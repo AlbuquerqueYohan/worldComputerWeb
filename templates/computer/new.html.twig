@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-12">
+        <h1>Ajouter un nouveau PC</h1>
+        {{ include ('admin/computer/_form.html.twig', {form: form, button: 'Ajouter'}) }}
+    </div>
+{% endblock %}
+
+
+
+

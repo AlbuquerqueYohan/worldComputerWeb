@@ -6,6 +6,13 @@
     <div class="container mt-4">
 
         <h1>Gestion des ordinateurs</h1>
+
+        {% for message in app.flashes('succes') %}
+        <div class="div alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
         <table class="table table-striped">
             <thread>
                 <tr>
@@ -19,6 +26,12 @@
                     <td>{{ ordinateurs.nom }}</td>
                     <td>
                         <a href="{{ path('admin_computer_edit', {id: ordinateurs.id}) }}" class="btn btn-secondary">Editer</a>
+                        <form method="post" action="{{ path('admin_computer_delete', {id: ordinateurs.id}) }}"
+                              style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sur ?')">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
