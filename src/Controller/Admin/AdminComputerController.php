@@ -32,6 +32,11 @@ class AdminComputerController extends AbstractController
         return $this->render('admin/computer/index.html.twig', compact('computers'));
     }
 
+    /**
+     * @param Ordinateurs $computers
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     #[Route('/admin/{id}', name: 'admin_computer_edit')]
     public function edit(Ordinateurs $computers, Request $request)
     {
