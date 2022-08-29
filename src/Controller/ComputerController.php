@@ -7,6 +7,7 @@ use App\Form\OrdinateurType;
 use App\Repository\OrdinateursRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,9 +35,11 @@ class ComputerController extends AbstractController
     }
 
     #[Route('/computer', name: 'computer_index')]
-    public function showAll()
+    public function showAll(PaginatorInterface $paginator,Request $request)
     {
-        $computer = $this->repository->findAll();
+        $computer = $paginator->paginate($this->repository->findAll(),
+        $request->query->getInt('page', 1),
+        3);
         return $this->render('computer/index.html.twig', [
                 'ordinateur' => $computer
             ]);

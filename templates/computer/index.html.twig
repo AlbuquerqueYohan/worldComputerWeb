@@ -6,10 +6,16 @@
     <div class="container mt-4">
         <h1>Liste des ordinateurs</h1>
     </div>
-    <div class="row flex">
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+        </form>
+    </nav>
+    <div class="row">
         {% for ordinateurs in ordinateur %}
             <div class="col-3">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">
                             <a href="{{ path('computer_show', {id: ordinateurs.id, slug: ordinateurs.slug}) }}">{{ ordinateurs.nom }}</a>
@@ -25,5 +31,8 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
+    <div class="pagination">
+        {{ knp_pagination_render(ordinateur) }}
     </div>
 {% endblock %}

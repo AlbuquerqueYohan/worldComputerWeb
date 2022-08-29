@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Ordinateurs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Migrations\Query\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
