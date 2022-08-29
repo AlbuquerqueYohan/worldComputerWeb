@@ -6,6 +6,7 @@ use App\Entity\Ordinateurs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Migrations\Query\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use http\Env\Request;
 
 /**
  * @extends ServiceEntityRepository<Ordinateurs>
@@ -49,6 +50,22 @@ class OrdinateursRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('l')
             ->setMaxResults(4)
             ->getQuery()
+            ->getResult();
+    }
+
+    /*
+    * reuturn the latest computer added on website
+    * @return Ordinateurs[]
+    */
+    public function findWhereText($query)
+    {
+        $l = $this->createQueryBuilder('l');
+        foreach ($query as $name => $value){
+            if ($value){
+                $l->orWhere("l.$name LIKE '%$value%'");
+            }
+        }
+        return $l->getQuery()
             ->getResult();
     }
 
