@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrdinateursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,6 +16,11 @@ class Ordinateurs
     const TYPE = [
         0 => 'fixe',
         1 => 'portable'
+    ];
+
+    const TYPE_STOCKAGE = [
+        0 => 'HDD',
+        1 => 'SSD'
     ];
 
     #[ORM\Id]
@@ -34,8 +41,8 @@ class Ordinateurs
     #[ORM\Column(type: 'text', nullable: true)]
     private $carte_graphique;
 
+//    #[Assert\Regex("/[0-9]+\.[0-9]{3}/")]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Assert\Regex("/[0-9]+\.[0-9]{3}/")]
     private $Poids;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -56,6 +63,12 @@ class Ordinateurs
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $port_usb;
+
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    private $type_stockage;
+
+    #[ORM\ManyToOne(targetEntity: Marques::class, inversedBy: 'marques_fk')]
+    private $marques_fk;
 
     public function __construct()
     {
@@ -207,6 +220,35 @@ class Ordinateurs
     public function setPortUsb(?string $port_usb): self
     {
         $this->port_usb = $port_usb;
+
+        return $this;
+    }
+
+    public function getTypeStockage(): ?string
+    {
+        return $this->type_stockage;
+    }
+
+    public function getStockageText(): string
+    {
+        return self::TYPE_STOCKAGE[$this->type_stockage];
+    }
+
+    public function setTypeStockage(?string $type_stockage): self
+    {
+        $this->type_stockage = $type_stockage;
+
+        return $this;
+    }
+
+    public function getMarquesFk(): ?Marques
+    {
+        return $this->marques_fk;
+    }
+
+    public function setMarquesFk(?Marques $marques_fk): self
+    {
+        $this->marques_fk = $marques_fk;
 
         return $this;
     }
