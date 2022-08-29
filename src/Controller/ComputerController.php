@@ -33,6 +33,15 @@ class ComputerController extends AbstractController
         return $this->render('computer/index.html.twig');
     }
 
+    #[Route('/computer', name: 'computer_index')]
+    public function showAll()
+    {
+        $computer = $this->repository->findAll();
+        return $this->render('computer/index.html.twig', [
+                'ordinateur' => $computer
+            ]);
+    }
+
     #[Route('/computer/{slug}-{id}', name: 'computer_show', requirements: ['slug' => '[a-z0-9\-]*'])]
     public function show($slug, $id)
     {
