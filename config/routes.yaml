@@ -9,3 +9,6 @@
 #computer_index:
 #  path: /computer
 #  controller: App\Controller\ComputerController::index
+
+logout:
+  path: /logout

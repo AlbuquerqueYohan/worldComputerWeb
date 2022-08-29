@@ -31,11 +31,23 @@
         </ul>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('computer_add') }}">Ajouter</a>
-            </li>
-        </ul>
+        {% if app.user %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_computer_index') }}">Administration</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('computer_add') }}">Ajouter</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{{ path('logout') }}" class="nav-link">Se deconnecter</a>
+                </li>
+            </ul>
+        {% endif %}
     </div>
 </nav>
 {% block body %}{% endblock %}

@@ -72,7 +72,8 @@ security:
         enable_csrf: true
 
       logout:
-        path: app_logout
+        path: /logout
+        target: /
       # https://symfony.com/doc/current/security/impersonating_user.html
       # switch_user: true
 
