@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Ordinateurs;
+use App\Entity\OrdinateursSearch;
+use App\Form\OrdinateursSearchType;
 use App\Form\OrdinateurType;
 use App\Repository\OrdinateursRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,12 +37,21 @@ class ComputerController extends AbstractController
     }
 
     #[Route('/computer', name: 'computer_index')]
-    public function showAll()
+    public function showAll(PaginatorInterface $paginator, Request $request): Response
     {
-        $computer = $this->repository->findAll();
+        $repository = [];
+        if ($request->query->get('filter')) {
+            $repository = $this->repository->findWhereText($request->query->get('filter'));
+        }else {
+            $repository = $this->repository->findAll();
+        }
+        $computer = $paginator->paginate($repository,
+            $request->query->get('page', 1),
+            8);
         return $this->render('computer/index.html.twig', [
-                'ordinateur' => $computer
-            ]);
+            'ordinateur' => $computer
+        ]);
+
     }
 
     #[Route('/computer/{slug}-{id}', name: 'computer_show', requirements: ['slug' => '[a-z0-9\-]*'])]
@@ -58,14 +70,14 @@ class ComputerController extends AbstractController
         $form = $this->createForm(OrdinateurType::class, $computer);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($computer);
             $this->em->flush();
             $this->addFlash('succes', 'PC ajouté avec succès');
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('admin/computer/edit.html.twig',[
+        return $this->render('admin/computer/edit.html.twig', [
             'computer' => $computer,
             'form' => $form->createView()
         ]);

@@ -6,24 +6,62 @@
     <div class="container mt-4">
         <h1>Liste des ordinateurs</h1>
     </div>
-    <div class="row flex">
-        {% for ordinateurs in ordinateur %}
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{{ path('computer_show', {id: ordinateurs.id, slug: ordinateurs.slug}) }}">{{ ordinateurs.nom }}</a>
-                        </h5>
-                        <p class="card-text">
-                            {{ ordinateurs.processeur }} <br>
-                            {{ ordinateurs.ram }} Go RAM <br>
-                            {{ ordinateurs.stockage }}<br>
-                            {{ ordinateurs.carteGraphique }}
-                        </p>
-                        <div class="text-primary">{{ ordinateurs.typetext }}</div>
+    <br>
+    <div class="row">
+        <div class="col-12 col-md-2">
+                <form action="" method="get" class="px-3">
+                    <div class="mb-3">
+                        <label for="Nom">Nom</label>
+                        <input type="text" name="filter[Nom]" class="form-control">
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="Nom">Processeur</label>
+                        <input type="text" name="filter[Processeur]" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Carte Graphique">Carte graphique</label>
+                        <input type="text" name="filter[carte_graphique]" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Nom">Mémoire RAM</label>
+                        <input type="text" name="filter[Ram]" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Nom">Stockage</label>
+                        <input type="text" name="filter[stockage]" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Nom">Type stockage</label>
+                        <input type="text" name="filter[type_stockage]" class="form-control">
+                    </div>
+                    <button>Rechercher</button>
+                </form>
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="row">
+                {% for ordinateurs in ordinateur %}
+                    <div class="col-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{{ path('computer_show', {id: ordinateurs.id, slug: ordinateurs.slug}) }}">{{ ordinateurs.nom }}</a>
+                                </h5>
+                                <p class="card-text">
+                                    {{ ordinateurs.processeur }} <br>
+                                    {{ ordinateurs.ram }} Go RAM <br>
+                                    {{ ordinateurs.stockage }}<br>
+                                    {{ ordinateurs.carteGraphique }}
+                                </p>
+                                <div class="text-primary">{{ ordinateurs.typetext }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+            <div class="pagination">
+                {{ knp_pagination_render(ordinateur) }}
+            </div>
+        </div>
     </div>
+
 {% endblock %}

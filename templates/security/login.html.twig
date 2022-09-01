@@ -12,6 +12,12 @@
             </div>
         {% endif %}
 
+        {% if app.user %}
+            <div class="alert alert-danger">
+                <p>Attention : Vous êtes déjà connécté à votre session {{ last_username }}</p>
+            </div>
+        {% endif %}
+
         <form action="{{ path('login') }}" method="post">
             <div class="form-group">
                 <label for="pseudo">Pseudo</label>
