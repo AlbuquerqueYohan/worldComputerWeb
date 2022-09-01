@@ -20,16 +20,15 @@ class OrdinateurType extends AbstractType
             ->add('carte_graphique')
             ->add('Poids')
             ->add('dimensions_ecran')
-            ->add('type', ChoiceType::class,[
+            ->add('type', ChoiceType::class, [
                 'choices' => $this->getChoiceType()
             ])
             ->add('stockage')
-            ->add('type_stockage', ChoiceType::class,[
+            ->add('type_stockage', ChoiceType::class, [
                 'choices' => $this->getChoiceStrorageType()
             ])
             ->add('caracteristique')
-            ->add('port_usb')
-        ;
+            ->add('port_usb');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -44,7 +43,7 @@ class OrdinateurType extends AbstractType
         $choices = Ordinateurs::TYPE;
         $output = [];
         foreach ($choices as $k => $v) {
-            $output[$v]=$k;
+            $output[$v] = $k;
         }
         return $output;
     }
@@ -54,7 +53,7 @@ class OrdinateurType extends AbstractType
         $choices = Ordinateurs::TYPE_STOCKAGE;
         $output = [];
         foreach ($choices as $k => $v) {
-            $output[$v]=$k;
+            $output[$v] = $k;
         }
         return $output;
     }

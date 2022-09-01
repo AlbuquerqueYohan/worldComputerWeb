@@ -40,8 +40,8 @@ class ComputerController extends AbstractController
     public function showAll(PaginatorInterface $paginator, Request $request): Response
     {
         $repository = [];
-        if ($request->query) {
-            $repository = $this->repository->findWhereText($request->query);
+        if ($request->query->get('filter')) {
+            $repository = $this->repository->findWhereText($request->query->get('filter'));
         }else {
             $repository = $this->repository->findAll();
         }

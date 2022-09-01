@@ -62,7 +62,7 @@ class OrdinateursRepository extends ServiceEntityRepository
         $l = $this->createQueryBuilder('l');
         foreach ($query as $name => $value){
             if ($value){
-                $l->orWhere("l.$name LIKE '%$value%'");
+                $l->andWhere("l.$name LIKE '%$value%'");
             }
         }
         return $l->getQuery()
