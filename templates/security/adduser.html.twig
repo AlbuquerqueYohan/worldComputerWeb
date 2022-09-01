@@ -2,9 +2,16 @@
 
 {% block title 'Ajouter un administrateur' %}
 
+
 {% block body %}
+
     <div class="container mt-12">
         <h1>Ajouter administrateur</h1>
+        {% if app.user %}
+            <div class="alert alert-danger">
+                <p>Attention au nommage, le pseudo pour l'administrateur se compose tel que admin_prenom</p>
+            </div>
+        {% endif %}
         {{ include ('security/_formuser.html.twig', {form: form, button: 'Ajouter'}) }}
     </div>
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +15,19 @@ class SecuityController extends AbstractController
 {
 
     private $em;
+    private $repository;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(ObjectManager $em, UserRepository $repository)
     {
         $this->em = $em;
+        $this->repository = $repository;
+    }
+
+    #[Route('/administrateur', name: 'user_index')]
+    public function index()
+    {
+        $user = $this->repository->findAll();
+        return $this->render('security/index.html.twig', compact('user'));
     }
 
     #[Route('/login', name: 'login')]
@@ -46,12 +56,43 @@ class SecuityController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
             $this->addFlash('succes', 'Administrateur ajouté avec succès');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('security/adduser.html.twig', [
             'user' => $user,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/administrateur/{id}', name: 'user_edit')]
+    public function edit(User $user, Request $request)
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $user->setPassword($user->algoCryptage($user->getPassword()));
+            $this->em->flush();
+            $this->addFlash('succes', 'Administrateur modifié avec succès');
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render('security/edit.html.twig',[
+            'user' => $user,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/administrateur/delete/{id}', name: 'user_delete', methods: ['DELETE', 'POST'])]
+    public function delete(User $user, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete', $request->get('_token')))
+        {
+            $this->em->remove($user);
+            $this->em->flush();
+            $this->addFlash('succes', 'Administrateur supprimé de la base');
+        }
+        return $this->redirectToRoute('user_index');
     }
 }
