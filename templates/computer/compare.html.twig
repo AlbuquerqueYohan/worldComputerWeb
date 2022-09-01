@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div class="container-fluid">
+        <form>
+            <div class="row">
+                <div class="col">
+                    <label for="">Choisissez le premier ordinateur</label>
+                    <select name="id1" class="form-control">
+                        {% for ordinateur in ordinateurs %}
+                            <option {% if ordinateur1 and ordinateur.id == ordinateur1.id %} selected {% endif %}
+                                    value="{{ ordinateur.id }}">{{ ordinateur.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="">Choisissez le premier ordinateur</label>
+                    <select name="id2" class="form-control">
+                        {% for ordinateur in ordinateurs %}
+                            <option {% if ordinateur2 and ordinateur.id == ordinateur2.id %} selected {% endif %}
+                                    value="{{ ordinateur.id }}">{{ ordinateur.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="my-3">
+                <button class="btn btn-primary">Comparer</button>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col">
+                {% if ordinateur1 %}
+                    {{ include('computer/detailcomputer.html.twig',{
+                        ordinateurs: ordinateur1
+                    }) }}
+                {% endif %}
+            </div>
+            <div class="col">
+                {% if ordinateur2 %}
+                    {{ include('computer/detailcomputer.html.twig',{
+                        ordinateurs: ordinateur2
+                    }) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

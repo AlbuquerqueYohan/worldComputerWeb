@@ -44,7 +44,7 @@ class ComputerController extends AbstractController
         $marquesRepository = $this->em->getRepository(Marques::class);
         if ($request->query->get('filter')) {
             $repository = $this->repository->findWhereText($request->query->get('filter'));
-        }else {
+        } else {
             $repository = $this->repository->findAll();
         }
         $computer = $paginator->paginate($repository,
@@ -65,7 +65,26 @@ class ComputerController extends AbstractController
     {
         $computer = $this->repository->find($id);
         return $this->render('computer/show.html.twig', [
-            'ordinateur' => $computer
+            'ordinateurs' => $computer
+        ]);
+    }
+
+    #[Route('/compare', name: 'computer_compare')]
+    public function compareComputer(Request $request)
+    {
+        $computer = $this->repository->findAll();
+        $query = $request->query;
+
+        $ordinateur1 = $query->get('id1') ?
+            $this->repository->find($query->get('id1')) : null;
+
+        $ordinateur2 = $query->get('id2') ?
+            $this->repository->find($query->get('id2')) : null;
+
+        return $this->render('computer/compare.html.twig', [
+            'ordinateurs' => $computer,
+            'ordinateur1' => $ordinateur1,
+            'ordinateur2' => $ordinateur2
         ]);
     }
 }
