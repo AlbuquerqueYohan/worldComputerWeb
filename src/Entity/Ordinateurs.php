@@ -14,13 +14,13 @@ class Ordinateurs
 {
 
     const TYPE = [
-        0 => 'fixe',
-        1 => 'portable'
+        1 => 'fixe',
+        2 => 'portable'
     ];
 
     const TYPE_STOCKAGE = [
-        0 => 'HDD',
-        1 => 'SSD'
+        1 => 'HDD',
+        2 => 'SSD'
     ];
 
     #[ORM\Id]

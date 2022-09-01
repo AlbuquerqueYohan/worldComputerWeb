@@ -2,6 +2,13 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-md-4">{{ form_row(form.Nom) }}</div>
+    <div class="col-md-4">
+        <select name="marquesFk" class="form-control">
+            {% for marque in marques %}
+            <option {% if marque.id = computers.marquesFk.id %} selected {% endif%} value="{{ marque.id }}">{{ marque.nom }}</option>
+            {% endfor %}
+        </select>
+    </div>
     <div class="col-md-4">{{ form_row(form.Processeur) }}</div>
     <div class="col-md-4">{{ form_row(form.carte_graphique) }}</div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Marques;
 use App\Entity\Ordinateurs;
 use App\Form\OrdinateurType;
 use App\Repository\OrdinateursRepository;
@@ -42,9 +43,12 @@ class AdminComputerController extends AbstractController
     public function edit(Ordinateurs $computers, Request $request)
     {
         $form = $this->createForm(OrdinateurType::class, $computers);
+        $marquesRepository = $this->em->getRepository(Marques::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            $marque = $marquesRepository->find($request->request->get('marquesFk'));
+            $computers->setMarquesFk($marque);
             $this->em->flush();
             $this->addFlash('succes', 'Ordinateur modifié avec succès');
             return $this->redirectToRoute('admin_computer_index');
@@ -52,6 +56,7 @@ class AdminComputerController extends AbstractController
 
         return $this->render('admin/computer/edit.html.twig',[
             'computers' => $computers,
+            'marques' => $marquesRepository->findAll(),
             'form' => $form->createView()
         ]);
     }
@@ -79,10 +84,13 @@ class AdminComputerController extends AbstractController
     public function add(Request $request)
     {
         $computer = new Ordinateurs();
+        $marquesRepository = $this->em->getRepository(Marques::class);
         $form = $this->createForm(OrdinateurType::class, $computer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $marque = $marquesRepository->find($request->request->get('marquesFk'));
+            $computers->setMarquesFk($marque);
             $this->em->persist($computer);
             $this->em->flush();
             $this->addFlash('succes', 'PC ajouté avec succès');
@@ -91,6 +99,7 @@ class AdminComputerController extends AbstractController
 
         return $this->render('admin/computer/edit.html.twig', [
             'computer' => $computer,
+            'marques' => $marquesRepository->findAll(),
             'form' => $form->createView()
         ]);
     }
