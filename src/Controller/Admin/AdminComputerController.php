@@ -56,6 +56,10 @@ class AdminComputerController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Ordinateurs $computers
+     * @param Request $request
+     */
     #[Route('/admin/delete/{id}', name: 'admin_computer_delete', methods: ['DELETE', 'POST'])]
     public function delete(Ordinateurs $computers, Request $request)
     {
@@ -68,6 +72,9 @@ class AdminComputerController extends AbstractController
         return $this->redirectToRoute('admin_computer_index');
     }
 
+    /**
+     * @param Request $request
+     */
     #[Route('/computer/ajouter', name: 'computer_add', requirements: ['slug' => '[a-z0-9\-]*'])]
     public function add(Request $request)
     {
