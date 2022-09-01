@@ -31,17 +31,17 @@ class SecuityController extends AbstractController
     }
 
     #[Route('/login', name: 'login')]
-        public function login(AuthenticationUtils $authenticationUtils)
-        {
-            // get the login error if there is one
-            $error = $authenticationUtils->getLastAuthenticationError();
-            // last username entered by the user
-            $lastUsername = $authenticationUtils->getLastUsername();
-            return $this->render('security/login.html.twig', [
-                'last_username' => $lastUsername,
-                'error'         => $error,
-            ]);
-        }
+    public function login(AuthenticationUtils $authenticationUtils)
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
 
 
     #[Route('/ajouterUtilisateur', name: 'user_add')]
@@ -71,14 +71,14 @@ class SecuityController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($user->algoCryptage($user->getPassword()));
             $this->em->flush();
             $this->addFlash('succes', 'Administrateur modifié avec succès');
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('security/edit.html.twig',[
+        return $this->render('security/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView()
         ]);
@@ -87,8 +87,7 @@ class SecuityController extends AbstractController
     #[Route('/administrateur/delete/{id}', name: 'user_delete', methods: ['DELETE', 'POST'])]
     public function delete(User $user, Request $request)
     {
-        if ($this->isCsrfTokenValid('delete', $request->get('_token')))
-        {
+        if ($this->isCsrfTokenValid('delete', $request->get('_token'))) {
             $this->em->remove($user);
             $this->em->flush();
             $this->addFlash('succes', 'Administrateur supprimé de la base');

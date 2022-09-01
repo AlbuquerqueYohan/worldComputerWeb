@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Marques;
 use App\Entity\Ordinateurs;
+use App\Repository\MarquesRepository;
+use App\Repository\OrdinateursRepository;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;

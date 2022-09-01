@@ -16,7 +16,12 @@ class UserType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('pseudo')
-            ->add('password');
+            ->add('password', null, [
+                'label' => 'Mot de passe',
+                'required' => false,
+                'attr' => [
+                    'value' => ''],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

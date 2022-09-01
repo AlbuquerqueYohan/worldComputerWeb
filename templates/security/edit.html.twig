@@ -4,7 +4,12 @@
 
 {% block body %}
     <div class="container mt-12">
-        <h1>Ajouter administrateur</h1>
+        <h1>Modifier administrateur</h1>
+        {% if app.user %}
+            <div class="alert alert-danger">
+                <p>Attention pour modifier l'administrateur, il faut obligatoirement renseigner son mot de passe existant ou le changer</p>
+            </div>
+        {% endif %}
         {{ include ('security/_formuser.html.twig', {form: form, button: 'Modifier'}) }}
     </div>
 {% endblock %}
