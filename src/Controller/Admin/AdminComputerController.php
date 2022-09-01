@@ -67,4 +67,24 @@ class AdminComputerController extends AbstractController
         }
         return $this->redirectToRoute('admin_computer_index');
     }
+
+    #[Route('/computer/ajouter', name: 'computer_add', requirements: ['slug' => '[a-z0-9\-]*'])]
+    public function add(Request $request)
+    {
+        $computer = new Ordinateurs();
+        $form = $this->createForm(OrdinateurType::class, $computer);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($computer);
+            $this->em->flush();
+            $this->addFlash('succes', 'PC ajouté avec succès');
+            return $this->redirectToRoute('admin_computer_index');
+        }
+
+        return $this->render('admin/computer/edit.html.twig', [
+            'computer' => $computer,
+            'form' => $form->createView()
+        ]);
+    }
 }

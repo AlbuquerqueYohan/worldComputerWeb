@@ -62,24 +62,4 @@ class ComputerController extends AbstractController
             'ordinateur' => $computer
         ]);
     }
-
-    #[Route('/computer/ajouter', name: 'computer_add', requirements: ['slug' => '[a-z0-9\-]*'])]
-    public function add(Request $request)
-    {
-        $computer = new Ordinateurs();
-        $form = $this->createForm(OrdinateurType::class, $computer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($computer);
-            $this->em->flush();
-            $this->addFlash('succes', 'PC ajouté avec succès');
-            return $this->redirectToRoute('home');
-        }
-
-        return $this->render('admin/computer/edit.html.twig', [
-            'computer' => $computer,
-            'form' => $form->createView()
-        ]);
-    }
 }
