@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Marques;
 use App\Entity\Ordinateurs;
 use App\Entity\OrdinateursSearch;
 use App\Form\OrdinateursSearchType;
@@ -40,6 +41,7 @@ class ComputerController extends AbstractController
     public function showAll(PaginatorInterface $paginator, Request $request): Response
     {
         $repository = [];
+        $marquesRepository = $this->em->getRepository(Marques::class);
         if ($request->query->get('filter')) {
             $repository = $this->repository->findWhereText($request->query->get('filter'));
         }else {
@@ -49,7 +51,11 @@ class ComputerController extends AbstractController
             $request->query->get('page', 1),
             8);
         return $this->render('computer/index.html.twig', [
-            'ordinateur' => $computer
+            'marques' => $marquesRepository->findAll(),
+            'type_stockages' => Ordinateurs::TYPE_STOCKAGE,
+            'type_ordinateurs' => Ordinateurs::TYPE,
+            'ordinateur' => $computer,
+            'filters' => $request->query->get('filter')
         ]);
 
     }

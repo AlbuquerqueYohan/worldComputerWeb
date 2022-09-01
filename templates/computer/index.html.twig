@@ -11,28 +11,54 @@
         <div class="col-12 col-md-2">
                 <form action="" method="get" class="px-3">
                     <div class="mb-3">
+                        <label for="marquesFk">Marque</label>
+                        <select name="filter[marques_fk]" class="form-control">
+                            <option value=""></option>
+                            {% for marque in marques %}
+                                <option {% if filters and marque.id == filters['marques_fk'] %} selected {% endif %}
+                                        value="{{ marque.id }}">{{ marque.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="Nom">Nom</label>
-                        <input type="text" name="filter[Nom]" class="form-control">
+                        <input type="text" name="filter[Nom]" class="form-control" value="{{ filters ? filters['Nom'] : '' }}">
                     </div>
                     <div class="mb-3">
                         <label for="Nom">Processeur</label>
-                        <input type="text" name="filter[Processeur]" class="form-control">
+                        <input type="text" name="filter[Processeur]" class="form-control" value="{{ filters ? filters['Processeur'] : '' }}">
                     </div>
                     <div class="mb-3">
                         <label for="Carte Graphique">Carte graphique</label>
-                        <input type="text" name="filter[carte_graphique]" class="form-control">
+                        <input type="text" name="filter[carte_graphique]" class="form-control" value="{{ filters ? filters['carte_graphique'] : ''}}">
                     </div>
                     <div class="mb-3">
                         <label for="Nom">Mémoire RAM</label>
-                        <input type="text" name="filter[Ram]" class="form-control">
+                        <input type="text" name="filter[Ram]" class="form-control" value="{{ filters ? filters['Ram'] : '' }}">
                     </div>
                     <div class="mb-3">
                         <label for="Nom">Stockage</label>
-                        <input type="text" name="filter[stockage]" class="form-control">
+                        <input type="text" name="filter[stockage]" class="form-control" value="{{ filters ? filters['stockage'] : '' }}">
                     </div>
                     <div class="mb-3">
-                        <label for="Nom">Type stockage</label>
-                        <input type="text" name="filter[type_stockage]" class="form-control">
+                        <label for="typeStockage">Type Stockage</label>
+                        <select name="filter[type_stockage]" class="form-control">
+                            <option value=""></option>
+                            {% for typestockage in type_stockages %}
+                                <option {% if filters and loop.index == filters['type_stockage'] %} selected {% endif %}
+                                        value="{{ loop.index }}">{{ typestockage }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="typeStockage">Type ordinateur</label>
+                        <select name="filter[type]" class="form-control">
+                            <option value=""></option>
+                            {% for typeordinateur in type_ordinateurs %}
+                                <option {% if filters and loop.index == filters['type'] %} selected {% endif %}
+                                        value="{{ loop.index }}">{{ typeordinateur }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <button>Rechercher</button>
                 </form>
