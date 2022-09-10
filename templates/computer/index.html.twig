@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Nos PC' %}
+{% block title 'Ordinateurs' %}
 
 {% block body %}
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        {% for ordinateurs in ordinateur %}
+        {% for computer in computers %}
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('computer_compare', {id: ordinateurs.id, slug: ordinateurs.slug}) }}">Comparer</a>
+                <a class="nav-link" href="{{ path('computer_compare', {id: computer.id, slug: computer.slug}) }}">Comparer</a>
             </li>
         </ul>
         {% endfor %}
@@ -63,9 +63,9 @@
                         <label for="typeStockage">Type ordinateur</label>
                         <select name="filter[type]" class="form-control">
                             <option value=""></option>
-                            {% for typeordinateur in type_ordinateurs %}
+                            {% for typeComputer in type_computer %}
                                 <option {% if filters and loop.index == filters['type'] %} selected {% endif %}
-                                        value="{{ loop.index }}">{{ typeordinateur }}</option>
+                                        value="{{ loop.index }}">{{ typeComputer }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -74,22 +74,22 @@
         </div>
         <div class="col-12 col-md-8">
             <div class="row">
-                {% for ordinateurs in ordinateur %}
+                {% for computer in computers %}
                     <div class="col-3">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <a href="{{ path('computer_show', {id: ordinateurs.id, slug: ordinateurs.slug}) }}">{{ ordinateurs.nom }}</a>
+                                    <a href="{{ path('computer_show', {id: computer.id, slug: computer.slug}) }}">{{ computer.nom }}</a>
                                 </h5>
                                 <p class="card-text">
-                                    {{ ordinateurs.processeur }} <br>
-                                    {{ ordinateurs.ram }} Go RAM <br>
-                                    {{ ordinateurs.stockage }}<br>
-                                    {{ ordinateurs.carteGraphique }}
+                                    {{ computer.processeur }} <br>
+                                    {{ computer.ram }} Go RAM <br>
+                                    {{ computer.stockage }}<br>
+                                    {{ computer.carteGraphique }}
                                 </p>
                                 <div class="d-flex justify-content-between">
-                                    <div class="text-primary">{{ ordinateurs.typetext }}</div>
-                                        <a href="{{ path('computer_compare') }}?id1={{ ordinateurs.id }}">Comparer</a>
+                                    <div class="text-primary">{{ computer.typetext }}</div>
+                                        <a href="{{ path('computer_compare') }}?id1={{ computer.id }}">Comparer</a>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                 {% endfor %}
             </div>
             <div class="pagination">
-                {{ knp_pagination_render(ordinateur) }}
+                {{ knp_pagination_render(computers) }}
             </div>
         </div>
     </div>

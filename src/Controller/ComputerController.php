@@ -28,33 +28,32 @@ class ComputerController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @return Response
-     */
     #[Route('/computer', name: 'computer_index')]
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('computer/index.html.twig');
-    }
-
-    #[Route('/computer', name: 'computer_index')]
-    public function showAll(PaginatorInterface $paginator, Request $request): Response
-    {
+        // Initialisation d'un tableau repository qui sera vide au départ
         $repository = [];
+        // Récupération des marques pour les filtres
         $marquesRepository = $this->em->getRepository(Marques::class);
-        if ($request->query->get('filter')) {
-            $repository = $this->repository->findWhereText($request->query->get('filter'));
+        // Si $request contient une key 'filter'
+        if ($request->query->get('filter'))
+        {
+            // Utilisation de la méthode findAndWhere avec les différents filtre passé par la vue
+            $repository = $this->repository->findAndWhere($request->query->get('filter'));
         } else {
+            // Sinon j'utilise la méthode findAll afin de retourner la liste de tous les ordinateurs
             $repository = $this->repository->findAll();
         }
-        $computer = $paginator->paginate($repository,
+        // Mise en place de la mise en page à l'aide de paginator
+        // Ici par défaut la page chargé sera la 1 et je descide d'afficher 8 ordinateurs
+        $computers = $paginator->paginate($repository,
             $request->query->get('page', 1),
             8);
         return $this->render('computer/index.html.twig', [
             'marques' => $marquesRepository->findAll(),
             'type_stockages' => Ordinateurs::TYPE_STOCKAGE,
-            'type_ordinateurs' => Ordinateurs::TYPE,
-            'ordinateur' => $computer,
+            'type_computer' => Ordinateurs::TYPE,
+            'computers' => $computers,
             'filters' => $request->query->get('filter')
         ]);
 

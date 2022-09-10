@@ -57,7 +57,7 @@ class OrdinateursRepository extends ServiceEntityRepository
     * reuturn the latest computer added on website
     * @return Ordinateurs[]
     */
-    public function findWhereText($query)
+    public function findAndWhere($query)
     {
         $l = $this->createQueryBuilder('l');
         foreach ($query as $name => $value){
