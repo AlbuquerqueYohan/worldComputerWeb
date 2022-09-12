@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: OrdinateursRepository::class)]
+#[Vich\Uploadable]
 class Ordinateurs
 {
 
@@ -27,6 +29,12 @@ class Ordinateurs
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
+
+    #[ORM\Column(type: 'string')]
+    private $filename;
+
+    #[Vich\UploadableField(mapping: 'computer_image', fileNameProperty: 'filename')]
+    private $imageFile;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $Nom;
@@ -96,6 +104,7 @@ class Ordinateurs
     public function getSlug(): string
     {
         $slugify = new Slugify();
+        // retourne le nom de l'ordinateur en chaine de caractère pour l'URL
         return $slugify->slugify($this->Nom);
     }
 
@@ -252,4 +261,37 @@ class Ordinateurs
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param mixed $filename
+     */
+    public function setFilename($filename): void
+    {
+        $this->filename = $filename;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param mixed $imageFile
+     */
+    public function setImageFile($imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
 }
