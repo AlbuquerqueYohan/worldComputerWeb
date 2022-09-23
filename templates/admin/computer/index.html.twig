@@ -6,13 +6,13 @@
     <div class="container mt-4">
 
         <h1>Gestion des ordinateurs</h1>
-
+        {# Message de succès en cas d'ajout ou modification d'un ordinateur   #}
         {% for message in app.flashes('succes') %}
         <div class="div alert alert-success">
             {{ message }}
         </div>
         {% endfor %}
-
+        {# Création du tableau #}
         <table class="table table-striped">
             <thread>
                 <tr>
@@ -21,12 +21,16 @@
                 </tr>
             </thread>
             <body>
-            {% for ordinateurs in computers %}
+            {# Boucle sur les différents ordinateurs #}
+            {% for computer in computers %}
                 <tr>
-                    <td>{{ ordinateurs.nom }}</td>
+            {# Nom de l'ordinateur dans la colonne nom #}
+                    <td>{{ computer.nom }}</td>
+            {# Bouton d'édition #}
                     <td>
-                        <a href="{{ path('admin_computer_edit', {id: ordinateurs.id}) }}" class="btn btn-secondary">Editer</a>
-                        <form method="post" action="{{ path('admin_computer_delete', {id: ordinateurs.id}) }}"
+                        <a href="{{ path('admin_computer_edit', {id: computer.id}) }}" class="btn btn-secondary">Editer</a>
+                        {# Bouton de suppression avec validation et token #}
+                        <form method="post" action="{{ path('admin_computer_delete', {id: computer.id}) }}"
                               style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sur ?')">
                             <input type="hidden" name="_method" value="delete">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete') }}">

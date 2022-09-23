@@ -45,7 +45,7 @@ class ComputerController extends AbstractController
             $repository = $this->repository->findAll();
         }
         // Mise en place de la mise en page à l'aide de paginator
-        // Ici par défaut la page chargé sera la 1 et je decide d'afficher 8 ordinateurs
+        // Ici par défaut la page chargée sera la 1 et je décide d'afficher 8 ordinateurs
         $computers = $paginator->paginate($repository,
             $request->query->get('page', 1),
             8);
@@ -63,7 +63,7 @@ class ComputerController extends AbstractController
     #[Route('/computer/{slug}-{id}', name: 'computer_show', requirements: ['slug' => '[a-z0-9\-]*'])]
     public function show($slug, $id)
     {
-        // Je cherche ici un ordinateur seulement en fonction de son ID
+        // Je cherche ici un ordinateur en fonction de son ID
         $computer = $this->repository->find($id);
         return $this->render('computer/show.html.twig', [
             'computer' => $computer

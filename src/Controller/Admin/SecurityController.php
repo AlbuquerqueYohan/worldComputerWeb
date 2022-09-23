@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecuityController extends AbstractController
+class SecurityController extends AbstractController
 {
 
     private $em;
@@ -33,9 +33,9 @@ class SecuityController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils)
     {
-        // get the login error if there is one
+        // Récupération de l'erreur de login si il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        // dernier username saisie par l'utilisateur
         $lastUsername = $authenticationUtils->getLastUsername();
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
@@ -47,15 +47,23 @@ class SecuityController extends AbstractController
     #[Route('/ajouterUtilisateur', name: 'user_add')]
     public function addUser(Request $request)
     {
+        // Initialisation d'une instance User
         $user = new User();
+        // Création du formulaire
         $form = $this->createForm(UserType::class, $user);
+        // Récuperation du formulaire sous forme de requête
         $form->handleRequest($request);
-
+        // Si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
+        // Récupération du mot de passe saisie et utilisation de algoCryptage pour crypter le mot de passe
             $user->setPassword($user->algoCryptage($user->getPassword()));
+            // pesrist permet de sauvegarder les données
             $this->em->persist($user);
+            // exécute la requête
             $this->em->flush();
+            // Apparition d'un bloc texte en vert permettant de valider à l'utilisateur l'ajout d'un administrateur
             $this->addFlash('succes', 'Administrateur ajouté avec succès');
+            // retourne ensuite à la vue d'administration des ordinateurs
             return $this->redirectToRoute('user_index');
         }
 

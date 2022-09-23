@@ -53,18 +53,19 @@ class OrdinateursRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /*
-    * reuturn the latest computer added on website
-    * @return Ordinateurs[]
-    */
     public function findAndWhere($query)
     {
+        // $l devient une nouvelle query
         $l = $this->createQueryBuilder('l');
-        foreach ($query as $name => $value){
-            if (!empty($value) && is_numeric($value)){
+        // Tant que $query contient une clé et une valeur
+        foreach ($query as $name => $value) {
+            // Si $value pas vide
+            if (!empty($value)) {
+                if (is_numeric($value)){
                 $l->andWhere("l.$name = $value");
-            }elseif (!empty($value) && is_string($value)){
+            }elseif (is_string($value)){
                 $l->andWhere("l.$name LIKE '%$value%'");
+                }
             }
         }
         return $l->getQuery()

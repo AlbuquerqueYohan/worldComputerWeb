@@ -9,6 +9,7 @@ use App\Repository\OrdinateursRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,6 +19,9 @@ class OrdinateurType extends AbstractType
     {
         $builder
             ->add('Nom')
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ])
             ->add('Ram')
             ->add('Processeur')
             ->add('carte_graphique')

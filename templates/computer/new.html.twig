@@ -2,7 +2,9 @@
 
 {% block body %}
     <div class="container mt-12">
+        {#  Titre de la page   #}
         <h1>Ajouter un nouveau PC</h1>
+        {# Modification de la valeur sur le bouton  #}
         {{ include ('admin/computer/_form.html.twig', {form: form, button: 'Ajouter'}) }}
     </div>
 {% endblock %}

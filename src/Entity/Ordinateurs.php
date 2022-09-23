@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\OrdinateursRepository;
+use Cassandra\Date;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use phpDocumentor\Reflection\DocBlock\Tags\Property;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -78,6 +81,9 @@ class Ordinateurs
     #[ORM\ManyToOne(targetEntity: Marques::class, inversedBy: 'marques_fk')]
     private $marques_fk;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $updated_at;
+
     public function __construct()
     {
         $this->ajoute_le = new \DateTime();
@@ -100,7 +106,7 @@ class Ordinateurs
         return $this;
     }
 
-    // Slug is use for made a good URL
+    // Slug is use for URL
     public function getSlug(): string
     {
         $slugify = new Slugify();
@@ -265,7 +271,7 @@ class Ordinateurs
     /**
      * @return mixed
      */
-    public function getFilename()
+    public function getFileName()
     {
         return $this->filename;
     }
@@ -273,7 +279,7 @@ class Ordinateurs
     /**
      * @param mixed $filename
      */
-    public function setFilename($filename): void
+    public function setFileName($filename): void
     {
         $this->filename = $filename;
     }
@@ -289,9 +295,25 @@ class Ordinateurs
     /**
      * @param mixed $imageFile
      */
-    public function setImageFile($imageFile): void
+    public function setImageFile(mixed $imageFile): Ordinateurs
     {
         $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
     }
 
 }
